@@ -1,0 +1,15 @@
+.DS_Store
+*.asv
+*/DATA*
+*/Data*
+*/EEGData*
+.ipynb_checkpoints/
+online_task/drafting_data/
+online_task/data/
+online_task/pilot_data/
+NOTES*
+__pycache__
+misc_notebooks
+manuscript
+.vscode
+development
