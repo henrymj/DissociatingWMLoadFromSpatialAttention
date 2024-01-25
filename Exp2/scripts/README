@@ -1,0 +1,5 @@
+`task/` contains the code to run the task in Matlab and Python. The main difference between the versions is the the Python versions supports real time eye tracking and feedback, which the Matlab Version did not.  
+
+`preprocess/` contains `EEGLab-Pipeline/`, which is a study-specific instance of the labs general preprocessing pipeline (available at [https://github.com/AwhVogelLab/EEGLAB-Pipeline]). It also contains scripts for reorganizing the preprocessed data into formats that the analytical pipeline works well with.
+
+`analysis/` contains all the scripts for analyzing experiment 2. See it's README for a breakdown of everything.

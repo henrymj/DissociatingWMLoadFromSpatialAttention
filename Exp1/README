@@ -1,0 +1,14 @@
+Both directories `1a` and `1b` contain the same structure.
+
+`Experiment` contains the code for running the experiment.
+
+`Data` contains the raw data and its reformatted versions.
+
+`Analyses` contains 4 subfolders:  
+1. `Analysis_ARF` runs artifact rejection  
+2. `Analysis_BEH` compares behavior across the conditions  
+3. `Analysis_MVL` runs the decoding analyses  
+4. `Analysis_POW` runs the alpha power analyses  
+
+There may be references to `EEGData`. These are copies of the folder under `Analysis_ARF`, and are excluded to save space.
+

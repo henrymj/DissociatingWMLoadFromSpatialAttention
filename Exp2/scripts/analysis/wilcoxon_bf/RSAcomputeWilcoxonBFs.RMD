@@ -1,0 +1,162 @@
+---
+title: "Computing Wilcoxon BF10s for RSA"
+author: "Henry Jones"
+date: "`r Sys.time()`"
+output: html_document
+---
+
+<!---
+In order to check that all the necessary packages are installed, Click the File > New File > R Markdown button and keep all of the options as is. Save the document somewhere, and, while that new document is open, click the knit button. If a window with some plots shows up, everything is installed correctly. If RStudio prompts you to install any packages, you should install them.
+-->
+
+<!---
+Please save this file as Homework1_lastname_firstname.Rmd
+
+Be sure to update the author field in the block above.
+
+While you are working on your homework, you can use the green arrows to run a "chunk" of code. In order to produce the final document, use the knit button. You will turn in both the Rmd file and the knitted html file, which will appear next to wherever you saved the Rmd file if there are no errors.
+
+Beware, if you run chunks out of order or reuse variable names your code may produce different results when it is run again from top to bottom. Before you knit your document, it is a good idea to run all the chunks in order from top to bottom in a clean environment. Use the broom button in the environment pane to clear your variables and click the Session > Restart R and Run All Chunks.
+
+If you ever want to reference the documentation about a function, go to the console below and type ?function_name. Try it now with ?read_csv.
+-->
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)  # loads many useful packages
+set.seed(1)  # Ensures reproducable results
+theme_set(theme_minimal())  # My personal preference for less ugly default plots
+
+```
+
+## Importing packages
+```{r}
+library(effsize)
+library(BayesFactor)
+library(sn)
+library(parallel)
+library(logspline)
+library(foreach)
+library(doMC)
+```
+
+## Importing Functions
+
+```{r}
+source('rankBasedCommonFunctions.R')
+source('rankSumSampler.R') # Wilcoxon rank sum function
+source('signRankSampler.R') # Wilcoxon signed-rank function
+source('spearmanSampler.R')# Spearman's rho function
+```
+
+
+## Importing data
+```{r}
+# Load the example data
+mathDat <- read.csv("DataExampleStudentMath.csv") # for rank sum  & Spearman's rho
+progDat <- read.csv("DataExampleProgabide.csv") # For signed-rank
+
+# Example 1: Wilcoxon Rank Sum
+# Do students who flunk a math course report drinking more alcohol?
+x <- mathDat$Dalc[mathDat$Math.T3 < 10] # Alcohol intake of students who failed
+y <- mathDat$Dalc[mathDat$Math.T3 >= 10] # Alcohol intake of students who passed
+```
+
+
+## testing signed rank test
+```{r}
+x <- progDat$p1 # Alcohol intake of students who failed
+y <- progDat$p4 # Alcohol intake of students who passed
+
+signedRankSamples <- signRankGibbsSampler(xVals = x - y,
+                                          testValue = 0,
+                                          nSamples = 5e3)
+
+
+# Posterior distribution
+hist(signedRankSamples$deltaSamples, freq = FALSE)
+
+```
+
+## Get BF
+
+```{r}
+# Give the posterior samples for delta to the function below to compute BF01
+bf = computeBayesFactorOneZero(signedRankSamples$deltaSamples, 
+                          whichTest = "Wilcoxon",
+                          priorParameter = 1 / sqrt(2))
+
+bf
+```
+
+## Whole delay period results
+
+```{r}
+whole_delay_data = read_csv("RDMs_partialCorr_delay250-1150_excludeBadEyes-False.csv", show_col_types = FALSE)
+
+factors = c("Attended Area", "Number of Locations", "Overlap Process", "Set Size")
+
+set.seed(2023)
+
+bfs = c()
+for (i in 1:length(factors)){
+  fac = factors[i]
+  scores = filter(whole_delay_data, factor==fac)$"semipartial correlation"
+  
+  signedRankSamples <- signRankGibbsSampler(xVals = scores,
+                                          testValue = 0,
+                                          nSamples = 1e4)
+  hist(signedRankSamples$deltaSamples, freq = FALSE)
+  
+  bf = computeBayesFactorOneZero(signedRankSamples$deltaSamples, 
+                          whichTest = "Wilcoxon",
+                          priorParameter = 1 / sqrt(2))
+  
+  bfs = append(bfs, bf)
+  
+}
+
+bf_df = data.frame(factor=factors, BF=bfs)
+write_csv(bf_df, "RSA_delay_period_BFs.csv")
+bf_df
+```
+
+
+## Timepoint by Timepoint results
+```{r}
+timepoint_data = read_csv("RDMs_partialCorr_timeseries.csv", show_col_types = FALSE)
+timepoints = unique(timepoint_data$timepoint)
+timepoints
+
+set.seed(2023)
+
+bfs = c()
+facs = c()
+times = c()
+for (i in 1:length(factors)){
+  fac = factors[i]
+  fac_scores = filter(timepoint_data, factor==fac)
+  for (t in 1:length(timepoints)){
+    time = timepoints[t]
+    scores = filter(fac_scores, timepoint==time)$"semipartial correlation"
+    
+    signedRankSamples <- signRankGibbsSampler(xVals = scores,
+                                        testValue = 0,
+                                        nSamples = 5e3)
+
+    bf = computeBayesFactorOneZero(signedRankSamples$deltaSamples, 
+                            whichTest = "Wilcoxon",
+                            priorParameter = 1 / sqrt(2))
+    
+    bfs = append(bfs, bf)
+    facs = append(facs, fac)
+    times = append(times, time)
+    
+  }
+}
+
+
+bf_timepoint_df = data.frame(factor=facs, timepoint=times, BF=bfs)
+write_csv(bf_timepoint_df, "RSA_byTimepoint_BFs.csv")
+bf_timepoint_df
+```

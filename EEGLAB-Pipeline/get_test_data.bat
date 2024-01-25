@@ -1,1 +1,0 @@
-explorer "https://drive.google.com/open?id=1qlUb25ceOwtPaZUFdZVoZy12aw4EuY73"

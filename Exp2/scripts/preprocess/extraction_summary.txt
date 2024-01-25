@@ -1,0 +1,26 @@
+
+Running 007_DCD_checked
+
+Condition 11: 253
+Condition 13: 238
+Condition 21: 141
+Condition 22: 276
+Condition 23: 129
+Condition 41: 15
+Condition 43: 15
+Condition 51: 10
+Condition 52: 11
+Condition 253: 10
+
+Running 008_DCD_checked
+
+Condition 11: 207
+Condition 13: 208
+Condition 21: 92
+Condition 22: 222
+Condition 23: 91
+Condition 41: 28
+Condition 43: 15
+Condition 51: 4
+Condition 52: 25
+Condition 253: 9
