@@ -1,11 +1,11 @@
-Code (and Data) for Jones et al., 2024
+Code (and Data) for the paper "EEG Decoding Reveals Distinct Processes for Directing Spatial Attention and Encoding into Working Memory"
 
-The paper (available here[]) uses two experiments and a suite of machine learning methods (IEMs, decoding, RSA) to reveal dissociations between spatial attention, and the number of items maintained in work
+The paper (available here (link forthcoming)) uses two experiments and a suite of machine learning methods (IEMs, decoding, RSA) to reveal dissociations between spatial attention, and the number of items maintained in work
 
 
 The code is available on [github](https://github.com/henrymj/DissociatingWMLoadFromSpatialAttention)
 
-The code and data are available on OSF
+The code and data are available on OSF (link forthcoming)
 
 Each experiment contains its own README (and sub READMEs) talking through the directory structure.
 
