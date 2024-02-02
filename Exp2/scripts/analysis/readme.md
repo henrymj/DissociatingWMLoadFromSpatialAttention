@@ -16,7 +16,8 @@
 `RSA.ipynb`
 
 ## Controls for Eyemovements (Fig 13)
-`IEM_alpha_analyses-eyeGazeBins`
+`decode_load-eyeTracking.ipynb`  
+`IEM_alpha_analyses-eyeGazeBins.ipynb`
 
 the following notebooks include sections at the end excluding subjects with seemingly informative eye movements:  
 - `IEM_alpha_analyses.ipynb`  

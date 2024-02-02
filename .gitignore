@@ -2,7 +2,9 @@
 *.asv
 Exp1/*/Analyses/*/EEGData/*
 Exp1/*/Analyses/*/Data/*
+Exp1/*/Analyses/*/deID_Data/*
 Exp1/*/Data/*
+Exp1/*/deID_Data/*
 Exp1/1*/Analyses/Analysis_MVL/ss2*_exp*.mat
 Exp1/1*/Analyses/Analysis_POW/grand_power_filteredBands_alltrials.mat
 Exp2/data/*
@@ -22,3 +24,4 @@ manuscript
 development
 .RData
 .Rhistory
+*.zip
