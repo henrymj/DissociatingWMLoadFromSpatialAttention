@@ -2,6 +2,9 @@
 *.asv
 Exp1/*/Analyses/*/EEGData/*
 Exp1/*/Analyses/*/Data/*
+Exp1/*/Analyses/EEGData/*
+Exp1/*/Analyses/processed_data/*
+Exp1/*/Analyses/processedData/*
 Exp1/*/Analyses/*/deID_Data/*
 Exp1/*/Data/*
 Exp1/*/deID_Data/*
@@ -25,3 +28,4 @@ development
 .RData
 .Rhistory
 *.zip
+.Rproj.user

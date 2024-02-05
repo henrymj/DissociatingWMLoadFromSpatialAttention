@@ -160,3 +160,67 @@ bf_timepoint_df = data.frame(factor=facs, timepoint=times, BF=bfs)
 write_csv(bf_timepoint_df, "RSA_byTimepoint_BFs.csv")
 bf_timepoint_df
 ```
+
+
+## Second half (for footnote 3)
+```{r}
+secondHalf_delay_data = read_csv("RDMs_partialCorr_delay700-1150_excludeBadEyes-False.csv", show_col_types = FALSE)
+
+factors = c("Attended Area", "Number of Locations", "Overlap Process", "Set Size")
+
+set.seed(2023)
+
+bfs = c()
+for (i in 1:length(factors)){
+  fac = factors[i]
+  scores = filter(secondHalf_delay_data, factor==fac)$"semipartial correlation"
+  
+  signedRankSamples <- signRankGibbsSampler(xVals = scores,
+                                          testValue = 0,
+                                          nSamples = 1e4)
+  hist(signedRankSamples$deltaSamples, freq = FALSE)
+  
+  bf = computeBayesFactorOneZero(signedRankSamples$deltaSamples, 
+                          whichTest = "Wilcoxon",
+                          priorParameter = 1 / sqrt(2))
+  
+  bfs = append(bfs, bf)
+  
+}
+
+bf_df = data.frame(factor=factors, BF=bfs)
+write_csv(bf_df, "RSA_second_half_delay_period_BFs.csv")
+bf_df
+```
+
+
+## Second half w/out informative eyes (for footnote 3)
+```{r}
+secondHalf_delay_data = read_csv("RDMs_partialCorr_delay700-1150_excludeBadEyes-True.csv", show_col_types = FALSE)
+
+factors = c("Attended Area", "Number of Locations", "Overlap Process", "Set Size")
+
+set.seed(2023)
+
+bfs = c()
+for (i in 1:length(factors)){
+  fac = factors[i]
+  scores = filter(secondHalf_delay_data, factor==fac)$"semipartial correlation"
+  
+  signedRankSamples <- signRankGibbsSampler(xVals = scores,
+                                          testValue = 0,
+                                          nSamples = 1e4)
+  hist(signedRankSamples$deltaSamples, freq = FALSE)
+  
+  bf = computeBayesFactorOneZero(signedRankSamples$deltaSamples, 
+                          whichTest = "Wilcoxon",
+                          priorParameter = 1 / sqrt(2))
+  
+  bfs = append(bfs, bf)
+  
+}
+
+bf_df = data.frame(factor=factors, BF=bfs)
+write_csv(bf_df, "RSA_second_half_delay_period_BFs_excludeBadEyes.csv")
+bf_df
+```

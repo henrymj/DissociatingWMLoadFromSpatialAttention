@@ -2,10 +2,9 @@ Code (and Data) for the paper "EEG Decoding Reveals Distinct Processes for Direc
 
 The paper (available here (link forthcoming)) uses two experiments and a suite of machine learning methods (IEMs, decoding, RSA) to reveal dissociations between spatial attention, and the number of items maintained in work
 
-
 The code is available on [github](https://github.com/henrymj/DissociatingWMLoadFromSpatialAttention)
 
-The code and data are available on OSF (link forthcoming)
+The code and data are available on [OSF](https://osf.io/8vur2/). Raw and (pre)processed data are available as components in the OSF project.  
 
 Each experiment contains its own README (and sub READMEs) talking through the directory structure.
 

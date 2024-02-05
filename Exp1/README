@@ -2,7 +2,7 @@ Both directories `1a` and `1b` contain the same structure.
 
 `Experiment` contains the code for running the experiment.
 
-`deID_Data` contains the raw data (de-identified) and its reformatted versions.
+Raw data is available at OSF (see highlevel README) at `/Exp1*_RawData`.
 
 `Analyses` contains 4 subfolders:  
 1. `Analysis_ARF` runs artifact rejection  
@@ -10,5 +10,8 @@ Both directories `1a` and `1b` contain the same structure.
 3. `Analysis_MVL` runs the decoding analyses  
 4. `Analysis_POW` runs the alpha power analyses  
 
-There may be references to `EEGData`. These are copies of the folder under `Analysis_ARF`, and are excluded to save space.
+There may be references to `EEGData`.  
+For `Analysis_MVL`, this is available at `Exp1*_processedData/EEGData`.  
+for `Analysis_MVL`, this is available at `Exp1*_processedData/alphaPower`.  
 
+`Exp1*_processedData` also contains 4 `.mat` files contains the decoding results, and 1 `.mat` file containing the grand alpha power across participants.  
