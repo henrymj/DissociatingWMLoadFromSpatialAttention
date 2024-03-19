@@ -31,7 +31,7 @@ for isub = 1:numsubs
     for chan = 1:num_chans
         all_chans(chan,:) = EEG.chanlocs(chan).labels;
     end
-    chan_idx = ismember(all_chans,{'L_GAZE_X','L_GAZE_Y','R_GAZE_X','R_GAZE_Y','StimTrak','HEOG','VEOG','TP9','GAZE_X','GAZE_Y','GAZE-X','GAZE-Y'});
+    chan_idx = ismember(all_chans,{'L_GAZE_X','L_GAZE_Y','R_GAZE_X','R_GAZE_Y','StimTrak','HEOG','VEOG','TP9','GAZE_X','GAZE_Y','L-GAZE-X','L-GAZE-Y','R-GAZE-X','R-GAZE-Y','GAZE-X','GAZE-Y'});
 
     xdata = EEG.data(~chan_idx,:,:);
     save(xdata_filename, 'xdata');
